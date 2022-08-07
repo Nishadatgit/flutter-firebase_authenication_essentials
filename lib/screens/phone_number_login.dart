@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authenication/firebase/firebase_auth_methods.dart';
 import 'package:firebase_authenication/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -37,9 +39,18 @@ class _PhoneNumberLoginState extends State<PhoneNumberLogin> {
             ),
           ),
           const SizedBox(height: 20),
-          CustomButton(title: 'Send OTP', onPressed: () {})
+          CustomButton(
+              title: 'Send OTP',
+              onPressed: () {
+                doOtpLogin();
+              })
         ],
       ),
     );
+  }
+
+  doOtpLogin() {
+    FirebaseAuthMethods(FirebaseAuth.instance)
+        .otpLogin(number: _otpController.text, context: context);
   }
 }
