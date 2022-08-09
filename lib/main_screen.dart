@@ -14,7 +14,15 @@ class MainScreen extends StatelessWidget {
         title: const Text('Main Screen'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 50.0),
+            child: Text(
+              'Type of logins'.toUpperCase(),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 27),
+            ),
+          ),
           MainButton(
             title: 'Email Password Login',
             onpressed: () {

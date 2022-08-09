@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authenication/screens/email_password_login.dart';
 import 'package:firebase_authenication/widgets/otp_dialog.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/home_screen.dart';
 import '../widgets/snackbar.dart';
 
 class FirebaseAuthMethods {
@@ -18,6 +20,8 @@ class FirebaseAuthMethods {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       await sendEmailVerification(context);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (ctx) => EmailPasswordLogin()));
     } on FirebaseAuthException catch (e) {
       showSnackbar(context, e.message!);
     }
@@ -44,6 +48,9 @@ class FirebaseAuthMethods {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       if (!_auth.currentUser!.emailVerified) {
         await sendEmailVerification(context);
+      } else {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (ctx) => HomeScreen()));
       }
     } on FirebaseAuthException catch (e) {
       showSnackbar(context, e.message!);
@@ -72,9 +79,9 @@ class FirebaseAuthMethods {
             );
 
             await _auth.signInWithCredential(credential);
+            Navigator.of(context).pop();
           },
         );
-        Navigator.of(context).pop();
       }),
       codeAutoRetrievalTimeout: (String verificationId) {
         //print..
